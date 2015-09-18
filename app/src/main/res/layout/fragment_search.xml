@@ -15,9 +15,16 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save Item"
+        android:text="Search"
         android:id="@+id/search"
         android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Item"
+        android:id="@+id/save"
+        android:layout_below="@+id/search"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -25,8 +32,9 @@
         android:layout_height="wrap_content"
         android:text="Next"
         android:id="@+id/next"
-        android:layout_below="@+id/search"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/save"
+        android:layout_alignLeft="@+id/search"
+        android:layout_alignStart="@+id/search" />
 
     <Button
         android:layout_width="wrap_content"
