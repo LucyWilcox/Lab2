@@ -1,3 +1,5 @@
+package com.example.lwilcox.lab2;
+
 import android.content.Context;
 import android.media.Image;
 import android.util.Log;
@@ -16,12 +18,12 @@ import java.util.ArrayList;
 /**
  * Created by lwilcox on 9/17/2015.
  */
-public class HttpHandler{
+public class HttpHandler {
     public RequestQueue queue;
     public HttpHandler(Context context) {
         queue = Volley.newRequestQueue(context);
     }
-    public void imageSearch(String searchQuery) {
+    public void imageSearch(String searchQuery, final Callback callback) {
         String query = searchQuery.replaceAll(" ", "+");
         String URL = "https://www.googleapis.com/customsearch/v1?cx=015805936300530222953:xfn9wvqvajy&key=AIzaSyBHSXnNE-tEICkyVFO_dgktm1sLbmXxwPw&";
         URL = URL + "q=" + searchQuery + "&searchType=image";
@@ -33,17 +35,17 @@ public class HttpHandler{
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response){
-                        ArrayList<String> displayImages = new ArrayList<>;
+                        ArrayList<String> displayImages = new ArrayList<String>();
                         try {
                             JSONObject items = response.getJSONObject("Items");
                             JSONObject image = response.getJSONObject("image");
                             for (int i = 0; i < items.length(); i++) {
-                                JSONObject thumbnailImage = image.getString("thumbnailLink");
+                                String thumbnailImage = image.getString("thumbnailLink");
                                 displayImages.add(thumbnailImage);
                             }
+                                callback.callback(displayImages);
                         } catch (Exception e)
                         {
-
                             Log.d("Success", "whoo");
                         }
                     }
