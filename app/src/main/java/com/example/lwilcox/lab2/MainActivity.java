@@ -18,11 +18,16 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         SearchFragment searchFragment = new SearchFragment();
         ft.add(R.id.searchView, searchFragment);
-//        ft.replace(R.id.list, fb);
-//        ft.addToBackStack("replacingFragmentA");
+////        ft.replace(R.id.list, fb);
+////        ft.addToBackStack("replacingFragmentA");
         ft.commit();
     }
 
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        View rootView = inflater.inflate(R.layout.activity_googlev2, container, false);
+//        return rootView;
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

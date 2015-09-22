@@ -63,7 +63,7 @@ public class SearchFragment extends Fragment {
                             imageView.setImageBitmap(bmp);
                         } catch (Exception e)
                         {
-                            Log.e("Error", "String not converting to URL");
+                            Log.d("Error", "String not converting to URL");
                         }
                     }
                 });
