@@ -26,7 +26,7 @@ public class HttpHandler {
     public void imageSearch(String searchQuery, final Callback callback) {
         String query = searchQuery.replaceAll(" ", "+");
         String URL = "https://www.googleapis.com/customsearch/v1?cx=015805936300530222953:xfn9wvqvajy&key=AIzaSyBHSXnNE-tEICkyVFO_dgktm1sLbmXxwPw&";
-        URL = URL + "q=" + searchQuery + "&searchType=image";
+        URL = URL + "q=" + searchQuery + "%searchType=image";
 
         JsonObjectRequest getRequest = new JsonObjectRequest(
                 Request.Method.GET,
