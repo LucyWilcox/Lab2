@@ -45,9 +45,9 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         myFragmentView = inflater.inflate(R.layout.fragment_search, container, false);
 
-        searchButton = (Button) getActivity().findViewById(R.id.search);
-        editText = (EditText) getActivity().findViewById(R.id.editText);
-        imageView = (ImageView) getActivity().findViewById(R.id.imageView);
+        searchButton = (Button) myFragmentView.findViewById(R.id.search);
+        editText = (EditText) myFragmentView.findViewById(R.id.editText);
+        imageView = (ImageView) myFragmentView.findViewById(R.id.imageView);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

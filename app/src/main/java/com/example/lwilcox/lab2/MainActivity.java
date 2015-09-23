@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         SearchFragment searchFragment = new SearchFragment();
-        ft.add(R.id.searchView, searchFragment);
-////        ft.replace(R.id.list, fb);
+        //ft.add(R.id.searchView, searchFragment);
+        ft.replace(R.id.container, searchFragment);
 ////        ft.addToBackStack("replacingFragmentA");
         ft.commit();
     }
