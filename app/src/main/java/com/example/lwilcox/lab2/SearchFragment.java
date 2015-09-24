@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.renderscript.ScriptGroup;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.webkit.HttpAuthHandler;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -44,6 +48,7 @@ public class SearchFragment extends Fragment {
     public EditText editText;
     public ImageView imageView;
     public Integer photoIndex;
+    public ArrayList<String> displayImages;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,8 +70,8 @@ public class SearchFragment extends Fragment {
                 handler.imageSearch(searchText, new Callback() {
                     @Override
                     public void callback(ArrayList<String> displayList) {
-                        String thumbnailLink = displayList.get(photoIndex);
-                        setImage(thumbnailLink);
+                        displayImages = displayList;
+                        setImage(displayImages);
                     }
                 });
             }
@@ -74,31 +79,51 @@ public class SearchFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                photoIndex += 1;
+                try {
+                    if (photoIndex < (displayImages.size() - 1)) {
+                        photoIndex += 1;
+                    }
+                    else {
+                        photoIndex = 0;
+                    }
+                    setImage(displayImages);
+                } catch (Exception e) {
+                    Context context = getActivity().getApplicationContext();
+                    CharSequence text = "Please search for an image first.";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
             }
         });
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                photoIndex -= 1;
+                try {
+                    if (photoIndex > 0) {
+                        photoIndex -= 1;
+                    }
+                    else {
+                        photoIndex = (displayImages.size() - 1);
+                    }
+                    setImage(displayImages);
+                } catch (Exception e) {
+                    Context context = getActivity().getApplicationContext();
+                    CharSequence text = "Please search for an image first.";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
             }
         });
         return myFragmentView;
     }
 
-    public void setImage(String thumbnailLink){
-        try {
-            URL url = new URL(thumbnailLink);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input;
-            input = connection.getInputStream();
-            Bitmap bmp = BitmapFactory.decodeStream(input);
-            imageView.setImageBitmap(bmp);
-        } catch (Exception e) {
-            Log.d("Error", "String not converting to URL");
-        }
+    public void setImage(ArrayList<String> displayList){
+        String thumbnailLink = displayList.get(photoIndex);
+        new ImageLoadTask(thumbnailLink, imageView).execute();
     }
 }
 

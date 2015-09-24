@@ -16,42 +16,44 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search"
+        android:text="@string/Search"
         android:id="@+id/search"
-        android:layout_below="@+id/editText"
+        android:layout_alignBottom="@+id/next"
         android:layout_centerHorizontal="true" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save Item"
+        android:text="Save Image"
         android:id="@+id/save"
-        android:layout_below="@+id/search"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Next"
-        android:id="@+id/next"
-        android:layout_below="@+id/save"
+        android:layout_below="@+id/imageView"
         android:layout_alignLeft="@+id/search"
         android:layout_alignStart="@+id/search" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Previous"
+        android:text="@string/Next"
+        android:id="@+id/next"
+        android:layout_below="@+id/editText"
+        android:layout_toRightOf="@+id/search"
+        android:layout_toEndOf="@+id/search" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Previous"
         android:id="@+id/previous"
-        android:layout_below="@+id/next"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/editText"
+        android:layout_toStartOf="@+id/search"
+        android:layout_toLeftOf="@+id/search" />
 
     <ImageView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:id="@+id/imageView"
-        android:layout_below="@+id/previous"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="59dp" />
+        android:scaleType="centerInside" />
 
 
 </RelativeLayout>
