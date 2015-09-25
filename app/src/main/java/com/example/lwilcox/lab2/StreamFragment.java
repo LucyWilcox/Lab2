@@ -1,6 +1,8 @@
 package com.example.lwilcox.lab2;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -42,7 +44,7 @@ public class StreamFragment extends Fragment {
 
         imageLinks = FeedReaderDBH.readList();
 
-//        if (imageLinks.size() == 0) { TO DO
+//        if (imageLinks.size() == 0) { TODO
 //
 //        }
 
@@ -61,7 +63,7 @@ public class StreamFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (photoIndex < (imageLinks.size() - 1)) {
-                    photoIndex += 1;
+                    photoIndex ++;
                 }
                 else {
                     photoIndex = 0;
@@ -73,12 +75,39 @@ public class StreamFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (photoIndex > 0) {
-                    photoIndex -= 1;
-                }
-                else {
+                    photoIndex--;
+                } else {
                     photoIndex = (imageLinks.size() - 1);
                 }
                 setImage();
+            }
+        });
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Delete")
+                alertDialogBuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        grocreyList.remove(p);
+
+                        grocreyList.add(p, editText.getText().toString());
+                        itemsAdapter.notifyDataSetChanged();
+                    }
+                });
+
+                alertDialogBuilder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        grocreyList.remove(p);
+                        itemsAdapter.notifyDataSetChanged();
+                    }
+                });
+                alertDialogBuilder.setView(editText);
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
             }
         });
         return myFragmentView;

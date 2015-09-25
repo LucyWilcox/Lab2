@@ -13,14 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import java.util.ArrayList;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class SearchFragment extends Fragment {
-
-    public SearchFragment() {
-    }
-
     public Button searchButton;
     public  Button nextButton;
     public Button previousButton;
@@ -66,7 +59,7 @@ public class SearchFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     if (photoIndex < (imageLinks.size() - 1)) {
-                        photoIndex += 1;
+                        photoIndex ++;
                     }
                     else {
                         photoIndex = 0;
@@ -74,7 +67,7 @@ public class SearchFragment extends Fragment {
                     setImage();
                 } catch (Exception e) {
                     Context context = getActivity().getApplicationContext();
-                    CharSequence text = "@string/search_first";
+                    CharSequence text = (CharSequence) R.string.search_first; //TODO: Fix this
                     int duration = Toast.LENGTH_SHORT;
 
                     Toast toast = Toast.makeText(context, text, duration);
@@ -87,7 +80,7 @@ public class SearchFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     if (photoIndex > 0) {
-                        photoIndex -= 1;
+                        photoIndex --;
                     }
                     else {
                         photoIndex = (imageLinks.size() - 1);
@@ -129,7 +122,6 @@ public class SearchFragment extends Fragment {
         });
         return myFragmentView;
     }
-
     public void setImage(){
         String thumbnailLink = imageLinks.get(photoIndex);
         new ImageLoadTask(thumbnailLink, imageView).execute();

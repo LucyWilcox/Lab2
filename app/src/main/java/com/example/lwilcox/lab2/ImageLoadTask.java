@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
-
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -13,10 +12,8 @@ import java.net.URL;
  * Created by lwilcox on 9/23/2015.
  */
 public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
-
     private String url;
     private ImageView imageView;
-
     public ImageLoadTask(String url, ImageView imageView) {
         this.url = url;
         this.imageView = imageView;
@@ -44,5 +41,4 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
         super.onPostExecute(result);
         imageView.setImageBitmap(result);
     }
-
 }
