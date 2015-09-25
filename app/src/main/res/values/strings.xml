@@ -8,4 +8,8 @@
     <string name="Previous">Previous</string>
     <string name="Next">Next</string>
     <string name="Search">Search</string>
+    <string name="save_image">Save Image</string>
+    <string name="search_first">Please search for an image first.</string>
+    <string name="view_stream">View Stream</string>
+    <string name="to_search">To Search Screen</string>
 </resources>

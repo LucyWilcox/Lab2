@@ -1,30 +1,17 @@
 package com.example.lwilcox.lab2;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.HttpAuthHandler;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONObject;
-
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -35,42 +22,71 @@ public class StreamFragment extends Fragment {
     public StreamFragment() {
     }
 
-    public Button searchButton;
+    public Button viewSearchButton;
+    public Button nextButton;
+    public Button previousButton;
     private View myFragmentView;
-    public EditText editText;
     public ImageView imageView;
+    public ArrayList<String> imageLinks;
+    public Integer photoIndex = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         myFragmentView = inflater.inflate(R.layout.fragment_stream, container, false);
-        searchButton = (Button) getActivity().findViewById(R.id.search);
-        editText = (EditText) getActivity().findViewById(R.id.editText);
-        imageView = (ImageView) getActivity().findViewById(R.id.imageView);
-        searchButton.setOnClickListener(new View.OnClickListener() {
+        imageView = (ImageView) myFragmentView.findViewById(R.id.imageView);
+        viewSearchButton = (Button) myFragmentView.findViewById(R.id.viewSearch);
+        nextButton = (Button) myFragmentView.findViewById(R.id.next);
+        previousButton = (Button) myFragmentView.findViewById(R.id.previous);
+        final FeedReaderDbHelper FeedReaderDBH = new FeedReaderDbHelper(getActivity().getApplicationContext());
+
+        imageLinks = FeedReaderDBH.readList();
+
+//        if (imageLinks.size() == 0) { TO DO
+//
+//        }
+
+        setImage();
+
+        viewSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String searchText = editText.getText().toString();
-                HttpHandler handler = new HttpHandler(getActivity().getApplicationContext());
-                handler.imageSearch(searchText, new Callback() {
-                    @Override
-                    public void callback(ArrayList<String> displayList) {
-                        String thumbnailLink = displayList.get(0);
-                        try {
-                            URL url = new URL(thumbnailLink);
-                            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                            imageView.setImageBitmap(bmp);
-                        } catch (Exception e)
-                        {
-                            Log.d("Error", "String not converting to URL");
-                        }
-                    }
-                });
-
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                SearchFragment searchFragment = new SearchFragment();
+                ft.replace(R.id.container, searchFragment);
+                ft.commit();
             }
         });
-
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (photoIndex < (imageLinks.size() - 1)) {
+                    photoIndex += 1;
+                }
+                else {
+                    photoIndex = 0;
+                }
+                setImage();
+            }
+        });
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (photoIndex > 0) {
+                    photoIndex -= 1;
+                }
+                else {
+                    photoIndex = (imageLinks.size() - 1);
+                }
+                setImage();
+            }
+        });
         return myFragmentView;
+    }
+
+    public void setImage(){
+        String thumbnailLink = imageLinks.get(photoIndex);
+        new ImageLoadTask(thumbnailLink, imageView).execute();
     }
 }
 
