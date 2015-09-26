@@ -67,9 +67,8 @@ public class SearchFragment extends Fragment {
                     setImage();
                 } catch (Exception e) {
                     Context context = getActivity().getApplicationContext();
-                    CharSequence text = context.getResources().getString(R.string.search_first); //TODO: Fix this
+                    CharSequence text = context.getResources().getString(R.string.search_first);
                     int duration = Toast.LENGTH_SHORT;
-
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
@@ -90,7 +89,6 @@ public class SearchFragment extends Fragment {
                     Context context = getActivity().getApplicationContext();
                     CharSequence text = context.getResources().getString(R.string.search_first);
                     int duration = Toast.LENGTH_SHORT;
-
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
@@ -105,7 +103,6 @@ public class SearchFragment extends Fragment {
                     Context context = getActivity().getApplicationContext();
                     CharSequence text = context.getResources().getString(R.string.search_first);
                     int duration = Toast.LENGTH_SHORT;
-
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
