@@ -26,21 +26,21 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
         values.put(FeedEntry.COLUMN_NAME_ENTRY_ID, item);
 
-        long newRowId;
-        newRowId = db.insert(
+        db.insert(
                 FeedEntry.TABLE_NAME,
                 null,
                 values);
     }
 
-//    public void removeItem(String item) {
-//        // Define 'where' part of query.
-//        String selection = FeedEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
-//// Specify arguments in placeholder order.
-//        String[] selectionArgs = { String.valueOf(rowId) };
-//// Issue SQL statement.
-//        db.delete(table_name, selection, selectionArgs);
-//    }
+    public void removeItem(String item) {
+        SQLiteDatabase db = getWritableDatabase();
+        String selection = FeedEntry.COLUMN_NAME_ENTRY_ID + " LIKE ? ";
+        String[] selectionArgs = { String.valueOf(item) };
+        db.delete(
+                FeedEntry.TABLE_NAME,
+                selection,
+                selectionArgs);
+}
 
     public ArrayList<String> readList(){
         SQLiteDatabase db = getReadableDatabase();

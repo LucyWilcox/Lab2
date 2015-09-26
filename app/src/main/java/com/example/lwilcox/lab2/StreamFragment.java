@@ -86,28 +86,22 @@ public class StreamFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("Delete")
-                alertDialogBuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setMessage("Delete?");
+                alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        grocreyList.remove(p);
-
-                        grocreyList.add(p, editText.getText().toString());
-                        itemsAdapter.notifyDataSetChanged();
+                        FeedReaderDBH.removeItem(imageLinks.get(photoIndex));
+                        imageLinks = FeedReaderDBH.readList();
+                        setImage(); // TODO: Edge case here
                     }
                 });
-
-                alertDialogBuilder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setNegativeButton("Nope", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        grocreyList.remove(p);
-                        itemsAdapter.notifyDataSetChanged();
                     }
                 });
-                alertDialogBuilder.setView(editText);
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
-            }
             }
         });
         return myFragmentView;
